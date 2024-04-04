@@ -264,7 +264,7 @@ def findlabel(i,p):
     if ubranch or subranch:
         if ubtrg &3 == 3 or ubtrg > 0x4000:
             return
-    if not (ubtrg in labels):
+    if not (ubtrg in labels) and ubtrg >= minadd and ubtrg <= maxadd:
         labels[ ubtrg ] = "addr_%X"%ubtrg
     if not (ubtrg in refs):
         refs[ ubtrg ] = []

@@ -1,6 +1,0 @@
-#!/bin/bash
-INFN="$1"
-OUTFN="${INFN%.hex}.hexd"
-TOOLP="../../../../pladecode/msdec/descramble.py"
-
-python "${TOOLP}" "${INFN}" > "${OUTFN}"

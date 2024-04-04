@@ -1,6 +1,0 @@
-#!/bin/bash
-INFN="$1"
-OUTFN="${INFN%.hexd}.hex"
-TOOLP="./scramble.py"
-
-python "${TOOLP}" "${INFN}" > "${OUTFN}"

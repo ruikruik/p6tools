@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import numpy as np
 import sys
 from uc_isa import *
@@ -39,7 +40,7 @@ def asm_op(ops):
 	if baseop in aop_map_inv:
 		op = aop_map_inv[baseop]
 		if not sfx in dsz_map_inv:
-			print "Invalid DSZ in op \"%s\""%ops
+			print("Invalid DSZ in op \"%s\""%ops)
 			quit()
 		op |= dsz_map_inv[sfx]
 		return op
@@ -50,7 +51,7 @@ def asm_op(ops):
 		elif sfx == "<MCC>":
 			return op		
 		else:
-			print "Invalid CC in op \"%s\""%ops
+			print("Invalid CC in op \"%s\""%ops)
 			quit()
 		return op
 	spl = ops.split("_")
@@ -60,16 +61,16 @@ def asm_op(ops):
 		if sc in sc_map_inv:
 			op |= sc_map_inv[sc] << 4
 		else:
-			print "Invalid SC in op \"%s\""%ops
+			print("Invalid SC in op \"%s\""%ops)
 			quit()			
 		ds = spl[2]
 		if ds in dsz_map_inv:
 			op |= dsz_map_inv[ds]
 		else:
-			print "Invalid DS in op \"%s\""%ops
+			print("Invalid DS in op \"%s\""%ops)
 			quit()			
 		return op
-	print "Unknown op: ", ops, spl[0]
+	print("Unknown op: ", ops, spl[0])
 	quit()
 
 def asm_reg(rs):
@@ -96,7 +97,7 @@ def asm_reg(rs):
 	elif rs in creg_map_inv:
 		return 0,0xe,creg_map_inv[rs]
 	else:
-		print "Unknown register spec: ", rs
+		print("Unknown register spec: ", rs)
 		quit()
 
 def asm_btarg(addr):
@@ -104,7 +105,7 @@ def asm_btarg(addr):
 		return int(addr[5:],16)
 	elif addr in label_addrs:
 		return label_addrs[addr]
-	print "Undefined label was referenced: \"%s\""%addr
+	print("Undefined label was referenced: \"%s\""%addr)
 	quit()
 
 def asm_flow(s):
@@ -120,7 +121,7 @@ def assemble(l, pass_no):
 	i = l.find(" ")
 	addr_str = l[0:i]
 	if addr_str[0:5] != "UROM_" or len(addr_str) > 9:
-		print "Address should be UROM_XXXX in line: \n%s"%l
+		print("Address should be UROM_XXXX in line: \n%s"%l)
 		quit()
 	else:
 		addr = int(addr_str[5:],16)
@@ -229,18 +230,18 @@ for l in fli:
 	if r is None:
 		continue
 	addr, uop = r
-	if addr < minaddr or minaddr is None:
+	if minaddr is None or addr < minaddr:
 		minaddr = addr
 	if addr > maxaddr:
 		maxaddr = addr
 	uops[addr] = uop
 	if addr &3 == 3:
-		print "Bad address %04X"%addr
+		print("Bad address %04X"%addr)
 
 fli.close()
 minaddr &= ~0x3
 for addr in range(minaddr, maxaddr, 4):
-	print "%04X: %s %s %s"%(addr,print_hex(uops[addr]),print_hex(uops[addr+1]),print_hex(uops[addr+2]))
+	print("%04X: %s %s %s"%(addr,print_hex(uops[addr]),print_hex(uops[addr+1]),print_hex(uops[addr+2])))
 
 
 

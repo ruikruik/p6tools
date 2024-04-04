@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import numpy as np
 import sys
 
@@ -109,7 +110,7 @@ for l in fli:
 	if not l:
 		continue
 	sa = l.split(": ")
-	addr = int(sa[0], 16) / 8
+	addr = int(sa[0], 16) // 8
 	if addr > maxadd:
 		maxadd = addr
 	if minadd is None or addr < minadd:
@@ -149,4 +150,4 @@ for i in range(0, nops):
 	zn = to_num(z[i])
 	addr = base + i * 4
 	s = "%04X: %020X %020X %020X"%(addr, xn, yn, zn)
-	print s
+	print(s)

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import numpy as np
 import sys
 
@@ -124,15 +125,15 @@ for l in fli:
 fli.close()
 
 nops = maxadd-minadd+4
-nops = nops / 4
+nops = nops // 4
 x = np.zeros((nops,80))
 y = np.zeros((nops,80))
 z = np.zeros((nops,80))
-base = minadd / 4
+base = minadd // 4
 
 
 for i,dwe in dwelist:
-	i = (i - minadd) / 4
+	i = (i - minadd) // 4
 	x[i,:] = to_arr(dwe[0],80)
 	y[i,:] = to_arr(dwe[1],80)
 	z[i,:] = to_arr(dwe[2],80)
@@ -154,4 +155,4 @@ for i in range(0,nops):
 	s = "%04X: "%((i + base)*8)
 	for j in dwe:
 		s += "%08X "%j
-	print s[:-1]
+	print(s[:-1])
